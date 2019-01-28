@@ -28,7 +28,7 @@ class viewholder extends RecyclerView.ViewHolder{
 
 public class Adapter_1 extends RecyclerView.Adapter<viewholder>{
     String getTime(){
-        DateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
+        DateFormat dateFormat = new SimpleDateFormat("hh.mm");
         String dateString = dateFormat.format(new Date()).toString();
         return  dateString;
     }
