@@ -21,6 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -96,6 +97,17 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         else if(idx==2)adapter_1=new Adapter_1(fromCampus.this,vector,mark);
         else adapter_1=new Adapter_1(fromCampus.this,arrayList2,mark);
         //else adapter_1=new Adapter_1(fromCampus.this,arrayList);
+        /*
+        LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
+    int distance;
+    View first = recycler.getChildAt(0);
+    int height = first.getHeight();
+    int current = recycler.getChildAdapterPosition(first);
+    int p = Math.abs(position - current);
+    if (p > 5) distance = (p - (p - 5)) * height;
+    else       distance = p * height;
+    manager.scrollToPositionWithOffset(position, distance);
+         */
         linearLayoutManager=new LinearLayoutManager(fromCampus.this,RecyclerView.VERTICAL,false);
         recyclerView.setAdapter(adapter_1);
         recyclerView.setLayoutManager(linearLayoutManager);

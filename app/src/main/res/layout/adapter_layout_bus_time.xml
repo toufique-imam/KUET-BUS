@@ -4,11 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="3dp"
+    android:animateLayoutChanges="true"
+    android:id="@+id/card_view_bus_time"
     android:orientation="vertical"
     app:cardBackgroundColor="@color/DarkRed"
     app:cardCornerRadius="5dp">
 
     <LinearLayout
+        android:animateLayoutChanges="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -33,30 +36,6 @@
                     style="@style/style_textinputtext"
                     android:text="Start Time" />
             </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/style_textinputlayout"
-                app:boxCornerRadiusBottomEnd="5dp"
-                app:boxCornerRadiusBottomStart="5dp"
-                app:boxCornerRadiusTopEnd="5dp"
-                android:hint="Type"
-                app:hintEnabled="true"
-                app:boxCornerRadiusTopStart="5dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_view_start_type"
-                    style="@style/style_textinputtext"
-                    android:text="Type" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
-
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/style_textinputlayout"
                 android:hint="From"
@@ -88,19 +67,44 @@
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/style_textinputlayout"
-            app:boxCornerRadiusBottomEnd="5dp"
-            android:hint="Note"
-            app:hintEnabled="true"
-            app:boxCornerRadiusBottomStart="5dp"
-            app:boxCornerRadiusTopEnd="5dp"
-            app:boxCornerRadiusTopStart="5dp">
+        <LinearLayout
+            android:animateLayoutChanges="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/text_view_start_Note"
-                style="@style/style_textinputtext"
-                android:text="Note" />
-        </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/style_textinputlayout"
+                android:layout_weight="2"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                android:hint="Type"
+                app:hintEnabled="true"
+                app:boxCornerRadiusTopStart="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_view_start_type"
+                    style="@style/style_textinputtext"
+                    android:text="Type" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/style_textinputlayout"
+                app:boxCornerRadiusBottomEnd="5dp"
+                android:hint="Note"
+                app:hintEnabled="true"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusTopStart="5dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/text_view_start_Note"
+                    android:fontFamily="@font/google_sans_regular"
+                    style="@style/style_textinputtext"
+                    android:text="Note" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
