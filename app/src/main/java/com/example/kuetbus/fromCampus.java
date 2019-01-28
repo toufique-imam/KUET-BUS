@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,14 +21,15 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.time.LocalDate;
+import java.util.Date;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Vector;
 
 class bus_data {
@@ -38,7 +40,12 @@ class bus_data {
 
 
 public class fromCampus extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
+    String get_next_day(String today){
+       if(today=="FRIDAY"){
+           return "SATURDAY";
+       }
+       else return "SUNDAY";
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
@@ -52,7 +59,13 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
             }
         }
     }
-
+    Calendar calendar = Calendar.getInstance();
+    Date date = calendar.getTime();
+    //System.out.println(new SimpleDateFormat("EE",Locale.ENGLISH).format(date.getTime()));
+    //String day=LocalDate.now().getDayOfWeek().name();
+    String day=new SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.getTime());
+    String next_day=get_next_day(day);
+    String day_now=day;
     final String API = "https://script.googleusercontent.com/macros/echo?user_content_key=57IfaKb-U8YMtPCyYb3KhpRBUh4wnT0IqN6AgG-TQz6G-woCggjjiRMSX8Iso9CVcnxvEwLk4OopX9Bv_-8VhNCZxplE1j5qm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnA4pYc6ryj8COOkQV7W5DxR0VUwzhItFQede_pq8mT2-DhK9GunvXrgK0fRfo0-HI_wSrHcae_pi&lib=MeRHtBj1FCHOrk7QgO_aaFlqR9hX156uw";
     Vector<bus_data> arrayList1, arrayList2,vector;
     TextFileHandler textFileHandler;
@@ -95,12 +108,12 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         json_str=textFileHandler.READ_TEXT("Test.txt");
         recyclerView=findViewById(R.id.recycler_view_main);
         if(json_str!=null){
-            update();
+            update(day_now);
         }
         else{
             update_json_data();
         }
-        log_json_arra();
+        //log_json_arra();
         set_view(2,true);
     }
     void log_json_arra(){
@@ -108,14 +121,14 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
             log_bus(arrayList1.get(i));
         }
     }
-    void update(){
+    void update(String day){
         try {
             JSONObject jsonObject = new JSONObject(json_str);
             JSONObject jsonObjectValues;
             try {
                 jsonObjectValues = jsonObject.getJSONObject("values");
                 try {
-                    String day=LocalDate.now().getDayOfWeek().name();
+
                     JSONArray morning = jsonObjectValues.getJSONArray("Morning");
                     JSONArray noon = jsonObjectValues.getJSONArray("Noon");
                     JSONArray afternoon = jsonObjectValues.getJSONArray("Afternoon");
@@ -154,7 +167,6 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
             progressDialog.setMessage("Updating");
             progressDialog.show();
         }
-
         @Override
         protected Void doInBackground(Void... voids) {
             HttpHandler sh = new HttpHandler();
@@ -165,14 +177,13 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
             }
             return  null;
         }
-
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressDialog.dismiss();
             json_str=textFileHandler.READ_TEXT("Test.txt");
             Toast.makeText(fromCampus.this,"DONE",Toast.LENGTH_SHORT).show();
-            update();
+            update(day_now);
         }
     }
 
@@ -270,16 +281,25 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         if (id == R.id.drawer_menu_for_you) {
             Toast.makeText(fromCampus.this,"Not Yet Implemented",Toast.LENGTH_SHORT).show();
         } else if (id == R.id.drawer_menu_upcoming) {
+            if(day_now!=day){update(day);day_now=day;}
             set_view(2,true);
             //Toast.makeText(fromCampus.this,"Not Yet Implemented",Toast.LENGTH_SHORT).show();
         } else if (id == R.id.drawer_menu_full_list) {
+            if(day_now!=day){update(day);day_now=day;}
             set_view(0,false);
         } else if (id == R.id.drawer_menu_To_KUET) {
+            if(day_now!=day){update(day);day_now=day;}
             set_view(1,true);
         } else if (id == R.id.drawer_menu_from_KUET) {
+            if(day_now!=day){update(day);day_now=day;}
             set_view(0,true);
         } else if (id == R.id.drawer_menu_update) {
             update_json_data();
+        }
+        else if(id==R.id.drawer_menu_next_full_list){
+            day_now=next_day;
+            update(next_day);
+            set_view(0,false);
         }
         else if(id==R.id.drawer_menu_github){
             String url="https://github.com/sabertooth9/KUET-BUS.git";
