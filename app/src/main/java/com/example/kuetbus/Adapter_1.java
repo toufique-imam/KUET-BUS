@@ -32,10 +32,23 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder>{
         String dateString = dateFormat.format(new Date()).toString();
         return  dateString;
     }
+    String make_24(String time){
+        String ans;
+        if(time.endsWith("PM")){
+            Integer x=Integer.valueOf(time.substring(0,2));
+            x+=12;
+            ans=String.valueOf(x)+time.substring(2,5);
+        }
+        else{
+            ans=time.substring(0,5);
+        }
+        return ans;
+    }
     Boolean comp(String bus_time,String cur_time){
         if(bus_time.length()<8){
             bus_time="0"+bus_time;
         }
+        bus_time=make_24(bus_time);
         if(bus_time.endsWith("AM") && cur_time.endsWith("PM"))return false;
         if(bus_time.endsWith("PM") && cur_time.endsWith("AM"))return  true;
         if(bus_time.compareTo(cur_time)>=0)return true;

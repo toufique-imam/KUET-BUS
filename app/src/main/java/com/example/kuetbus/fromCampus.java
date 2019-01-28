@@ -187,7 +187,7 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
             json_str=textFileHandler.READ_TEXT("Test.txt");
             Toast.makeText(fromCampus.this,"DONE",Toast.LENGTH_SHORT).show();
             Log.e("DAYY",day_now);
-            update(day_now);
+            update(day);
             set_view(2,true);
         }
     }
