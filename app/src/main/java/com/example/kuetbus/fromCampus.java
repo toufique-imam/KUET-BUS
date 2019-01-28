@@ -171,7 +171,10 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         protected Void doInBackground(Void... voids) {
             HttpHandler sh = new HttpHandler();
             String jsnStr = sh.makeServiceCall(API);
-            Log.e("JSON", jsnStr);
+           try{ Log.e("JSON", jsnStr);}
+           catch (Exception e){
+               Log.e("JSONERROR",e.getMessage());
+           }
             if (jsnStr != null) {
                 textFileHandler.WRITE_TEXT("Test.txt", jsnStr);
             }
@@ -183,7 +186,9 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
             progressDialog.dismiss();
             json_str=textFileHandler.READ_TEXT("Test.txt");
             Toast.makeText(fromCampus.this,"DONE",Toast.LENGTH_SHORT).show();
+            Log.e("DAYY",day_now);
             update(day_now);
+            set_view(2,true);
         }
     }
 

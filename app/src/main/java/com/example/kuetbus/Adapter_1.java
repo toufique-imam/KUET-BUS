@@ -70,7 +70,7 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder>{
                 bus_data.type="BUS";
                 bus_data.loc1="IS";
                 bus_data.loc2="AVAILABLE";
-                bus_data.msg="RIGHT NOW";
+                bus_data.msg="RIGHT NOW IF YOU ARE USING FOR FIRST TIME PLEASE UPDATE";
                 this.tmp_data.add(bus_data);
             }
         }
