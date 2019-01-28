@@ -122,13 +122,14 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
                     JSONArray night = jsonObjectValues.getJSONArray("Night");
                     JSONArray saturday = jsonObjectValues.getJSONArray("Saturday");
                     Log.e("DAYYY",day);
-                    if(!day.equals("SATURDAY")) {
-                        process_data(morning);
-                        process_data(noon);
-                        process_data(afternoon);
-                        process_data(night);
-                    }else process_data(saturday);
-
+                    if(!day.equals("FRIDAY")) {
+                        if (!day.equals("SATURDAY")) {
+                            process_data(morning);
+                            process_data(noon);
+                            process_data(afternoon);
+                            process_data(night);
+                        } else process_data(saturday);
+                    }
                 } catch (JSONException e) {
                     Log.e("ERROR", e.getMessage());
                 }
