@@ -32,3 +32,5 @@ After Double Tap View Shoubl've benn like The first image but a small portion of
 - Search Bar
 
 - Fixing the Bugs
+
+- Setting Remainder/Alarm something like this 
