@@ -13,7 +13,7 @@ Used New [Android Jetpack](https://developer.android.com/jetpack/)
 
 ## Install
 
-> [Version 1.2.1](https://github.com/sabertooth9/KUET-BUS/releases/download/1.2.1/KUET.BUS.1.2.1.apk)
+> [Version 1.2.1](https://github.com/sabertooth9/KUET-BUS/releases/download/1.2.2/KUET.BUS.1.2.2.apk)
 
 > [History](https://github.com/sabertooth9/KUET-BUS/releases)
 
