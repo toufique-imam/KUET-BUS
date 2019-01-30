@@ -1,87 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view_bus_time"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="1dp"
     android:animateLayoutChanges="true"
-    app:cardBackgroundColor="@color/Black"
-    android:id="@+id/card_view_bus_time"
     android:clipChildren="true"
     android:clipToPadding="true"
-    android:padding="5dp"
-    android:layout_margin="2dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp"
+    app:cardBackgroundColor="@color/Maroon">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/style_text_input_layout"
-                app:boxCornerRadiusBottomEnd="5dp"
-                app:boxCornerRadiusBottomStart="5dp"
-                android:hint="@string/start_time"
-                app:hintEnabled="true"
-                app:boxCornerRadiusTopEnd="5dp"
-                app:boxCornerRadiusTopStart="5dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_view_start_time"
-                    style="@style/style_text_input_text"
-                    android:text="@string/start_time" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/style_text_input_layout"
-                android:hint="@string/from"
-                app:hintEnabled="true"
-                app:boxCornerRadiusBottomEnd="5dp"
-                app:boxCornerRadiusBottomStart="5dp"
-                app:boxCornerRadiusTopEnd="5dp"
-                app:boxCornerRadiusTopStart="5dp">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:cardBackgroundColor="@color/White"
+                    app:cardCornerRadius="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_view_from"
-                    style="@style/style_text_input_text"
-                    android:text="@string/from" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/text_view_start_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/google_sans_bold"
+                        android:padding="5dp"
+                        android:text="@string/start_time"
+                        android:textColor="@color/Maroon"
+                        android:textSize="24sp" />
+                </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/style_text_input_layout"
-                app:boxCornerRadiusBottomEnd="5dp"
-                android:hint="@string/to"
-                app:hintEnabled="true"
-                app:boxCornerRadiusBottomStart="5dp"
-                app:boxCornerRadiusTopEnd="5dp"
-                app:boxCornerRadiusTopStart="5dp">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:cardBackgroundColor="@color/White"
+                    app:cardCornerRadius="5dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_view_to"
-                    style="@style/style_text_input_text"
-                    android:text="@string/to" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    <TextView
+                        android:id="@+id/text_view_rem_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/google_sans_bold"
+                        android:padding="5dp"
+                        android:text="@string/rem_time"
+                        android:textColor="@color/Maroon"
+                        android:textSize="20sp" />
+                </com.google.android.material.card.MaterialCardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_near_me_white_24dp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_view_from"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/google_sans_regular"
+                        android:padding="5dp"
+                        android:text="@string/from"
+                        android:textColor="@color/White"
+                        android:textSize="20sp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_gps_fixed_white_24dp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/text_view_to"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/google_sans_medium"
+                        android:padding="5dp"
+                        android:text="@string/to"
+                        android:textColor="@color/White"
+                        android:textSize="24sp" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linear_layout_expand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:baselineAligned="false">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/style_text_input_layout"
                 android:layout_weight="2"
+                android:hint="@string/type"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
-                android:hint="@string/type"
+                app:boxCornerRadiusTopStart="5dp"
                 app:hintEnabled="true"
-                app:boxCornerRadiusTopStart="5dp">
+                android:layout_width="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_view_start_type"
@@ -91,17 +150,17 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/style_text_input_layout"
-                app:boxCornerRadiusBottomEnd="5dp"
                 android:hint="@string/note"
-                app:hintEnabled="true"
+                app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
-                app:boxCornerRadiusTopStart="5dp">
+                app:boxCornerRadiusTopStart="5dp"
+                app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_view_start_Note"
-                    android:fontFamily="@font/google_sans_regular"
                     style="@style/style_text_input_text"
+                    android:fontFamily="@font/google_sans_regular"
                     android:text="@string/note" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>

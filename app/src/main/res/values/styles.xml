@@ -18,20 +18,20 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
     <style name="style_text_input_layout" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColorHint">@color/Red</item>
         <item name="android:layout_weight">1</item>
     </style>
     <style name="style_text_input_text">
         <item name="android:textColor">@color/WhiteSmoke</item>
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:editable">false</item>
     </style>
     <style name="style_text_input_text_mini">
         <item name="android:textColor">@color/WhiteSmoke</item>
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:editable">false</item>
         <item name="android:fontFamily">@font/google_sans_regular</item>

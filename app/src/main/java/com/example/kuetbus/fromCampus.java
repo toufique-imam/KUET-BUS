@@ -1,9 +1,11 @@
 package com.example.kuetbus;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -16,6 +18,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
@@ -29,16 +32,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Vector;
 
-class bus_data {
+class bus_data{
     boolean from_campus;
     String time1, loc1, time2, msg, type, loc2;
     bus_data() { }
 }
+
 
 
 public class fromCampus extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -74,6 +82,15 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
     String json_str;
     LinearLayoutManager linearLayoutManager;
     RecyclerView recyclerView;
+    Date get_time(String timex){
+        DateFormat format=new SimpleDateFormat("hh:mm a",Locale.US);
+        try {
+            return  format.parse(timex);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +116,7 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         else if(idx==2)adapter_1=new Adapter_1(fromCampus.this,vector,mark);
         else adapter_1=new Adapter_1(fromCampus.this,arrayList2,mark);
         linearLayoutManager=new LinearLayoutManager(fromCampus.this,RecyclerView.VERTICAL,false);
+        //GridLayoutManager giid=new GridLayoutManager(fromCampus.this,2,RecyclerView.VERTICAL,false);
         recyclerView.setAdapter(adapter_1);
         recyclerView.setLayoutManager(linearLayoutManager);
     }
@@ -263,6 +281,49 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
             vector.add(bsd);
             vector.add(bsd1);
         }
+        Collections.sort(arrayList1, new Comparator<bus_data>() {
+            @Override
+            public int compare(bus_data o1, bus_data o2) {
+                Date tim1,tim2;
+                if(o1.from_campus){
+                    tim1=get_time(o1.time1);
+                }else
+                    tim1=get_time(o1.time2);
+                if(o2.from_campus){
+                    tim2=get_time(o2.time1);
+                }else
+                    tim2=get_time(o2.time2);
+                return tim1.compareTo(tim2);
+            }
+        });   Collections.sort(arrayList2, new Comparator<bus_data>() {
+            @Override
+            public int compare(bus_data o1, bus_data o2) {
+                Date tim1,tim2;
+                if(o1.from_campus){
+                    tim1=get_time(o1.time1);
+                }else
+                    tim1=get_time(o1.time2);
+                if(o2.from_campus){
+                    tim2=get_time(o2.time1);
+                }else
+                    tim2=get_time(o2.time2);
+                return tim1.compareTo(tim2);
+            }
+        });   Collections.sort(vector, new Comparator<bus_data>() {
+            @Override
+            public int compare(bus_data o1, bus_data o2) {
+                Date tim1,tim2;
+                if(o1.from_campus){
+                    tim1=get_time(o1.time1);
+                }else
+                    tim1=get_time(o1.time2);
+                if(o2.from_campus){
+                    tim2=get_time(o2.time1);
+                }else
+                    tim2=get_time(o2.time2);
+                return tim1.compareTo(tim2);
+            }
+        });
     }
 
     @Override

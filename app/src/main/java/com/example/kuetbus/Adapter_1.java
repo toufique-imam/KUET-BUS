@@ -9,11 +9,13 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -23,12 +25,15 @@ import java.util.Locale;
 import java.util.Vector;
 
 class viewholder extends RecyclerView.ViewHolder {
-    TextInputEditText time, from, to, note, type;
+    TextInputEditText note, type;
+    TextView time,from,to;
     MaterialCardView cardView;
     LinearLayout linearLayout;
+    TextView rem_time;
 
     public viewholder(@NonNull View itemView) {
         super(itemView);
+        rem_time=itemView.findViewById(R.id.text_view_rem_time);
         linearLayout=itemView.findViewById(R.id.linear_layout_expand);
         cardView = itemView.findViewById(R.id.card_view_bus_time);
         time = itemView.findViewById(R.id.text_view_start_time);
@@ -115,18 +120,39 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
         Log.e("WHATHAP", a.msg);
         Log.e("WHATHAP", a.type);
     }
-
+    String time_diff(String bus_time){
+        DateFormat format=new SimpleDateFormat("hh:mm a",Locale.US);
+        try {
+            Date time=format.parse(bus_time);
+            Date cur= format.parse(getTime());
+            long dif=time.getTime()-cur.getTime();
+            long diffm=dif/(60*1000)%60;
+            long diffHours = dif / (60 * 60 * 1000) % 24;
+            return  diffHours+":"+diffm+" min";
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     @Override
     public void onBindViewHolder(@NonNull final viewholder viewholder, final int i) {
         bus_data bus = tmp_data.get(i);
         //log_bus(bus);
         if (bus.from_campus) {
+            viewholder.cardView.setBackgroundColor(Color.BLACK);
+            viewholder.time.setTextColor(Color.BLACK);
+            viewholder.rem_time.setTextColor(Color.BLACK);
+            viewholder.rem_time.setText(time_diff(bus.time1));
             viewholder.from.setText(bus.loc1);
             viewholder.to.setText(bus.loc2);
             viewholder.time.setText(bus.time1);
             viewholder.type.setText(bus.type);
             viewholder.note.setText(bus.msg);
         } else {
+            viewholder.cardView.setBackgroundColor(Color.rgb(13, 79, 139));
+            viewholder.time.setTextColor(Color.rgb(13, 79, 139));
+            viewholder.rem_time.setTextColor(Color.rgb(13, 79, 139));
+            viewholder.rem_time.setText(time_diff(bus.time2));
             viewholder.from.setText(bus.loc2);
             viewholder.to.setText(bus.loc1);
             viewholder.time.setText(bus.time2);
@@ -149,6 +175,12 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
             }
         });
         viewholder.note.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Onclick_action(viewholder,i);
+            }
+        });
+        viewholder.rem_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Onclick_action(viewholder,i);
