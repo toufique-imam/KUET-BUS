@@ -4,11 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
+    app:cardBackgroundColor="@color/Black"
     android:id="@+id/card_view_bus_time"
-    android:elevation="8dp"
-    android:orientation="vertical"
-    app:cardBackgroundColor="@color/DarkRed"
-    app:cardCornerRadius="5dp">
+    android:clipChildren="true"
+    android:clipToPadding="true"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true"
+    android:orientation="vertical">
 
     <LinearLayout
         android:animateLayoutChanges="true"

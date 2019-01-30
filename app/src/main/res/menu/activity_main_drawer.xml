@@ -3,48 +3,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single"
+        android:id="@+id/group_1">
         <item
             android:id="@+id/drawer_menu_upcoming"
-            android:icon="@drawable/baseline_departure_board_black_36"
-            android:title="Upcoming Buses" />
+            android:icon="@drawable/baseline_departure_board_white_36dp"
+            android:title="@string/upcoming_buses" />
         <item
+            android:enabled="false"
             android:id="@+id/drawer_menu_for_you"
-            android:icon="@drawable/ic_directions_bike_black_36dp"
-            android:title="For You" />
+            android:visible="false"
+            android:icon="@drawable/ic_directions_bike_white_36dp"
+            android:title="@string/for_you" />
         <item
             android:id="@+id/drawer_menu_from_KUET"
-            android:icon="@drawable/ic_home_black_36dp"
-            android:title="From KUET" />
+            android:icon="@drawable/ic_home_white_36dp"
+            android:title="@string/from_kuet" />
         <item
             android:id="@+id/drawer_menu_To_KUET"
-            android:icon="@drawable/ic_gps_not_fixed_black_36dp"
-            android:title="To KUET" />
+            android:icon="@drawable/ic_gps_not_fixed_white_36dp"
+            android:title="@string/to_kuet" />
         <item
             android:id="@+id/drawer_menu_full_list"
-            android:icon="@drawable/ic_gps_fixed_black_36dp"
-            android:title="Today's Full Schedule" />
+            android:icon="@drawable/ic_gps_fixed_white_36dp"
+            android:title="@string/today_s_full_schedule" />
         <item
             android:id="@+id/drawer_menu_next_full_list"
-            android:icon="@drawable/ic_today_black_36dp"
-            android:title="Tomorrow's Full Schedule" />
+            android:icon="@drawable/ic_today_white_36dp"
+            android:title="@string/tomorrow_s_full_schedule" />
         <item
             android:id="@+id/drawer_menu_update"
-            android:icon="@drawable/ic_system_update_alt_black_36dp"
-            android:title="Update" />
+            android:icon="@drawable/ic_system_update_alt_white_36dp"
+            android:title="@string/update" />
     </group>
+    <group android:checkableBehavior="single"
+        android:id="@+id/group_2">
+    <item
+        android:id="@+id/drawer_menu_github"
+        android:icon="@drawable/ic_code_white_36dp"
+        android:title="@string/github" />
+    <item
+        android:id="@+id/drawer_menu_feedback"
+        android:icon="@drawable/ic_near_me_white_36dp"
+        android:title="@string/feedback" />
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/drawer_menu_github"
-                android:icon="@drawable/ic_code_black_36dp"
-                android:title="Github" />
-            <item
-                android:id="@+id/drawer_menu_feedback"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Feedback" />
-        </menu>
-    </item>
+    </group>
 
 </menu>

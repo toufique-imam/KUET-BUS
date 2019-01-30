@@ -8,7 +8,7 @@
     tools:context=".fromCampus"
     android:padding="5dp"
     tools:showIn="@layout/app_bar_main"
-    android:background="@color/PapayaWhip"
+    android:background="@color/DimGray"
     android:orientation="vertical">
     <androidx.recyclerview.widget.RecyclerView
         android:animateLayoutChanges="false"

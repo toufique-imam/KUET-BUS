@@ -3,6 +3,7 @@ package com.example.kuetbus;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
+import android.util.Pair;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -17,12 +18,14 @@ public class TextFileHandler {
     public TextFileHandler() {
     }
 
-    public String READ_TEXT(String fileName) {
+    public Pair<Boolean,String> READ_TEXT(String fileName) {
         StringBuilder ans = new StringBuilder();
         String tmp;
         try {
             File root = new File(Environment.getExternalStorageDirectory(), "Notes");
-            if (!root.exists()) root.mkdirs();
+            if (!root.exists()) {
+                return Pair.create(Boolean.FALSE,null);
+            }
             File gpxfile = new File(root, fileName);
             FileReader fileReader = new FileReader(gpxfile);
 
@@ -34,12 +37,14 @@ public class TextFileHandler {
             bufferedReader.close();
         } catch (FileNotFoundException e) {
             Log.e(getClass().getSimpleName(), e.getMessage());
+            return Pair.create(Boolean.FALSE,null);
         } catch (IOException e) {
             Log.e(getClass().getSimpleName(), e.getMessage());
+            return Pair.create(Boolean.FALSE,null);
         }
         Log.e(getClass().getSimpleName(),"DONE READ");
         Log.e("SEE_ME", ans.toString());
-        return ans.toString();
+        return Pair.create(Boolean.TRUE,ans.toString());
     }
 
     public void WRITE_TEXT(String sFileName, String sBody) {

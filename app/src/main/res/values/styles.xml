@@ -6,7 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:fontFamily">@font/google_sans_medium</item>
+        <item name="android:fontFamily">@font/google_sans_regular</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -24,13 +24,13 @@
         <item name="android:layout_weight">1</item>
     </style>
     <style name="style_text_input_text">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/WhiteSmoke</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:editable">false</item>
     </style>
-    <style name="style_textinputtext_mini">
-        <item name="android:textColor">@color/white</item>
+    <style name="style_text_input_text_mini">
+        <item name="android:textColor">@color/WhiteSmoke</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:editable">false</item>

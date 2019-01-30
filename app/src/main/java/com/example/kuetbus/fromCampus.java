@@ -1,7 +1,6 @@
 package com.example.kuetbus;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -20,9 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -43,13 +43,13 @@ class bus_data {
 
 public class fromCampus extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     String get_next_day(String today){
-       if(today=="FRIDAY"){
+       if(today.equals("FRIDAY")){
            return "SATURDAY";
        }
        else return "SUNDAY";
     }
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         switch (requestCode) {
             case 1: {
                 if (grantResults.length > 0
@@ -80,15 +80,15 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(fromCampus.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE},
                 1);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.inflateMenu(R.menu.main);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer,toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         initialize();
         Log.e("DAYNAME",day);
@@ -107,9 +107,10 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         arrayList2 = new Vector<>();
         vector=new Vector<>();
         textFileHandler = new TextFileHandler();
-        json_str=textFileHandler.READ_TEXT("Test.txt");
+        Pair<Boolean,String>json=textFileHandler.READ_TEXT("Test.txt");
         recyclerView=findViewById(R.id.recycler_view_main);
-        if(json_str!=null){
+        if(json.first==Boolean.TRUE){
+            json_str=json.second;
             update(day_now);
         }
         else{
@@ -117,6 +118,7 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         }
         //log_json_arra();
         set_view(2,true);
+        Toast.makeText(fromCampus.this,"Double Tap on Item to see Notes",Toast.LENGTH_LONG).show();
     }
     void log_json_arra(){
         for(int i=0;i<arrayList1.size();i++){
@@ -156,16 +158,15 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         }
     }
     String process_note_for_location(String s){
-        StringBuilder ans=new StringBuilder();
-        if(s.contains("Ferighat") || s.contains("ferighat"))ans.append("Ferighat ");
-        if(s.contains("Rupsha") || s.contains("rupsha"))ans.append("Rupsha ");
-        if(s.contains("Nirala"))ans.append("Nirala ");
-        if(s.contains("Gollamari"))ans.append("Gollamari ");
-        if(s.contains("Moylapota"))ans.append("Moylapota ");
-        if(s.contains("Sonadanga"))ans.append("Sondanga ");
-        if(s.contains("Dakbangla"))ans.append("Dakbangla ");
-        if(ans.length()==0)return "Dakbangla";
-        else return  ans.toString();
+        //StringBuilder ans=new StringBuilder();
+        if(s.contains("Ferighat") || s.contains("ferighat"))return "Ferighat";
+        if(s.contains("Rupsha") || s.contains("rupsha"))return "Rupsha";
+        if(s.contains("Moylapota"))return "Moylapota";
+        if(s.contains("Dakbangla"))return  "Dakbangla";
+        if(s.contains("Sonadanga"))return "Sonadanga";
+        if(s.contains("Gollamari"))return "Gollamari";
+        return "Dakbangla";
+        //else return  ans.toString();
     }
     private void update_json_data(){
         GetBusData getBusData=new GetBusData();
@@ -197,7 +198,7 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             progressDialog.dismiss();
-            json_str=textFileHandler.READ_TEXT("Test.txt");
+            json_str=textFileHandler.READ_TEXT("Test.txt").second;
             Toast.makeText(fromCampus.this,"DONE",Toast.LENGTH_SHORT).show();
             Log.e("DAYY",day_now);
             update(day);

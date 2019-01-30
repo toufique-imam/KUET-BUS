@@ -84,7 +84,7 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
             }
             if (this.tmp_data.isEmpty()) {
                 bus_data bus_data = new bus_data();
-                bus_data.time1 = "NO";
+                bus_data.time1 = "NO BUS";
                 bus_data.from_campus = true;
                 bus_data.type = "BUS";
                 bus_data.loc1 = "IS";
