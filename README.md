@@ -12,6 +12,8 @@ Used New [Android Jetpack](https://developer.android.com/jetpack/)
 > Friendly UI (I guess :3 )
 
 ## Install
+
+Right Click One the link and select save this link as
 > [Version 1.0](https://github.com/sabertooth9/KUET-BUS/blob/master/APK/KUET%20BUS.apk)
 
 ### Bug
