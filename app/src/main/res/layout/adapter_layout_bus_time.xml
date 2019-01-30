@@ -8,7 +8,8 @@
     android:id="@+id/card_view_bus_time"
     android:clipChildren="true"
     android:clipToPadding="true"
-    app:cardUseCompatPadding="true"
+    android:padding="5dp"
+    android:layout_margin="2dp"
     android:orientation="vertical">
 
     <LinearLayout
