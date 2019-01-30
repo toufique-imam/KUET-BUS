@@ -8,8 +8,6 @@
     android:id="@+id/card_view_bus_time"
     android:clipChildren="true"
     android:clipToPadding="true"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="3dp"
     app:cardUseCompatPadding="true"
     android:orientation="vertical">
 
