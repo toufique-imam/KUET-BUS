@@ -26,7 +26,7 @@ After Double Tap
 
 ![alt text](https://i.ibb.co/X3hmMLx/Screenshot-20190130-134931-2-1.png)
 
-After Double Tap View Shoubl've benn like The first image but a small portion off expanded Item is still showing
+After Double Tap View Shoubl've been like The first image but a small portion off expanded Item is still showing
 
 ### Possible Future Update
 - Search Bar
