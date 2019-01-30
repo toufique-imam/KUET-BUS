@@ -1,6 +1,7 @@
 package com.example.kuetbus;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -90,24 +91,13 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         initialize();
+        Log.e("DAYNAME",day);
     }
     void set_view(int idx,boolean mark){
         Adapter_1 adapter_1;
         if(idx==0) adapter_1=new Adapter_1(fromCampus.this,arrayList1,mark);
         else if(idx==2)adapter_1=new Adapter_1(fromCampus.this,vector,mark);
         else adapter_1=new Adapter_1(fromCampus.this,arrayList2,mark);
-        //else adapter_1=new Adapter_1(fromCampus.this,arrayList);
-        /*
-        LinearLayoutManager manager = (LinearLayoutManager) recycler.getLayoutManager();
-    int distance;
-    View first = recycler.getChildAt(0);
-    int height = first.getHeight();
-    int current = recycler.getChildAdapterPosition(first);
-    int p = Math.abs(position - current);
-    if (p > 5) distance = (p - (p - 5)) * height;
-    else       distance = p * height;
-    manager.scrollToPositionWithOffset(position, distance);
-         */
         linearLayoutManager=new LinearLayoutManager(fromCampus.this,RecyclerView.VERTICAL,false);
         recyclerView.setAdapter(adapter_1);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -165,7 +155,18 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
             Log.e("ERROR", e.getMessage());
         }
     }
-
+    String process_note_for_location(String s){
+        StringBuilder ans=new StringBuilder();
+        if(s.contains("Ferighat") || s.contains("ferighat"))ans.append("Ferighat ");
+        if(s.contains("Rupsha") || s.contains("rupsha"))ans.append("Rupsha ");
+        if(s.contains("Nirala"))ans.append("Nirala ");
+        if(s.contains("Gollamari"))ans.append("Gollamari ");
+        if(s.contains("Moylapota"))ans.append("Moylapota ");
+        if(s.contains("Sonadanga"))ans.append("Sondanga ");
+        if(s.contains("Dakbangla"))ans.append("Dakbangla ");
+        if(ans.length()==0)return "Dakbangla";
+        else return  ans.toString();
+    }
     private void update_json_data(){
         GetBusData getBusData=new GetBusData();
         getBusData.execute();
@@ -249,6 +250,11 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
             bsd1.time2 = process_time(xd);
             bsd.msg = tmp.getString("index3");
             bsd1.msg = tmp.getString("index3");
+            if(bsd.loc2.isEmpty()){
+                xd=process_note_for_location(bsd.msg);
+                bsd.loc2=xd;
+                bsd1.loc2=xd;
+            }
             bsd.from_campus=true;
             bsd1.from_campus=false;
             arrayList1.add(bsd);

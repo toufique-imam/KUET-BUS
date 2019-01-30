@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="3dp"
     android:animateLayoutChanges="true"
     android:id="@+id/card_view_bus_time"
+    android:elevation="8dp"
     android:orientation="vertical"
     app:cardBackgroundColor="@color/DarkRed"
     app:cardCornerRadius="5dp">
@@ -23,22 +23,22 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/style_textinputlayout"
+                style="@style/style_text_input_layout"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
-                android:hint="Start Time"
+                android:hint="@string/start_time"
                 app:hintEnabled="true"
                 app:boxCornerRadiusTopEnd="5dp"
                 app:boxCornerRadiusTopStart="5dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_view_start_time"
-                    style="@style/style_textinputtext"
-                    android:text="Start Time" />
+                    style="@style/style_text_input_text"
+                    android:text="@string/start_time" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/style_textinputlayout"
-                android:hint="From"
+                style="@style/style_text_input_layout"
+                android:hint="@string/from"
                 app:hintEnabled="true"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
@@ -47,14 +47,14 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_view_from"
-                    style="@style/style_textinputtext"
-                    android:text="From" />
+                    style="@style/style_text_input_text"
+                    android:text="@string/from" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/style_textinputlayout"
+                style="@style/style_text_input_layout"
                 app:boxCornerRadiusBottomEnd="5dp"
-                android:hint="To"
+                android:hint="@string/to"
                 app:hintEnabled="true"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
@@ -62,8 +62,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_view_to"
-                    style="@style/style_textinputtext"
-                    android:text="TO" />
+                    style="@style/style_text_input_text"
+                    android:text="@string/to" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
@@ -75,25 +75,25 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/style_textinputlayout"
+                style="@style/style_text_input_layout"
                 android:layout_weight="2"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
-                android:hint="Type"
+                android:hint="@string/type"
                 app:hintEnabled="true"
                 app:boxCornerRadiusTopStart="5dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_view_start_type"
-                    style="@style/style_textinputtext"
-                    android:text="Type" />
+                    style="@style/style_text_input_text"
+                    android:text="@string/type" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                style="@style/style_textinputlayout"
+                style="@style/style_text_input_layout"
                 app:boxCornerRadiusBottomEnd="5dp"
-                android:hint="Note"
+                android:hint="@string/note"
                 app:hintEnabled="true"
                 app:boxCornerRadiusBottomStart="5dp"
                 app:boxCornerRadiusTopEnd="5dp"
@@ -102,8 +102,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/text_view_start_Note"
                     android:fontFamily="@font/google_sans_regular"
-                    style="@style/style_textinputtext"
-                    android:text="Note" />
+                    style="@style/style_text_input_text"
+                    android:text="@string/note" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </LinearLayout>

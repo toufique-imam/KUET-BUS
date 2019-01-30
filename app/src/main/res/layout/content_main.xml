@@ -11,6 +11,8 @@
     android:background="@color/PapayaWhip"
     android:orientation="vertical">
     <androidx.recyclerview.widget.RecyclerView
+        android:animateLayoutChanges="false"
+        android:nestedScrollingEnabled="false"
         android:id="@+id/recycler_view_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

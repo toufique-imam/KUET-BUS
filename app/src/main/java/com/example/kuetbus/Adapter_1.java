@@ -8,16 +8,17 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textfield.TextInputEditText;
 
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.transition.TransitionManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Vector;
 
 class viewholder extends RecyclerView.ViewHolder {
@@ -37,34 +38,14 @@ class viewholder extends RecyclerView.ViewHolder {
 
 public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
     String getTime() {
-        DateFormat dateFormat = new SimpleDateFormat("hh.mm aa");
-        String dateString = dateFormat.format(new Date()).toString();
-        return dateString;
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm a", Locale.US);
+        return dateFormat.format(new Date());
     }
-
-    String make_24(String time) {
-        String ans;
-        if (time.endsWith("PM")) {
-            Integer x = Integer.valueOf(time.substring(0, 2));
-            x += 12;
-            ans = String.valueOf(x) + time.substring(2, 5);
-        } else {
-            ans = time.substring(0, 5);
-        }
-        return ans;
-    }
-
-    Boolean comp(String bus_time, String cur_time) {
-        if (bus_time.length() < 8) {
-            bus_time = "0" + bus_time;
-        }
-        bus_time = make_24(bus_time);
-        cur_time = make_24(cur_time);
-        Log.e("TIME_bus", bus_time);
-        Log.e("TIME_cur", cur_time);
-        if (bus_time.compareTo(cur_time) >= 0) {
-            Log.e("TIME_bus", bus_time);
-            Log.e("TIME_cur", cur_time);
+    Boolean comp(String bus_time, String cur_time) throws ParseException {
+        DateFormat format=new SimpleDateFormat("hh:mm a",Locale.US);
+        Date time=format.parse(bus_time);
+        Date cur=format.parse(cur_time);
+        if(time.compareTo(cur)>=0){
             return true;
         }
         return false;
@@ -84,12 +65,20 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
             this.tmp_data = new Vector<>();
             for (bus_data bus_data : tmp_data) {
                 if (bus_data.from_campus) {
-                    if (comp(bus_data.time1, time)) {
-                        this.tmp_data.add(bus_data);
+                    try {
+                        if (comp(bus_data.time1, time)) {
+                            this.tmp_data.add(bus_data);
+                        }
+                    } catch (ParseException e) {
+                        Log.e("TIMEERROR",e.getMessage());
                     }
                 } else {
-                    if (comp(bus_data.time2, time)) {
-                        this.tmp_data.add(bus_data);
+                    try {
+                        if (comp(bus_data.time2, time)) {
+                            this.tmp_data.add(bus_data);
+                        }
+                    } catch (ParseException e) {
+                        Log.e("TIMEERROR",e.getMessage());
                     }
                 }
             }
@@ -125,7 +114,7 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final viewholder viewholder, int i) {
+    public void onBindViewHolder(@NonNull final viewholder viewholder, final int i) {
         bus_data bus = tmp_data.get(i);
         //log_bus(bus);
         if (bus.from_campus) {
@@ -146,42 +135,42 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
         viewholder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Onclick_action(viewholder);
+                Onclick_action(viewholder,i);
             }
         });
         viewholder.type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Onclick_action(viewholder);
+                Onclick_action(viewholder,i);
             }
         });
         viewholder.note.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Onclick_action(viewholder);
+                Onclick_action(viewholder,i);
             }
         });
         viewholder.time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Onclick_action(viewholder);
+                Onclick_action(viewholder,i);
             }
         });
         viewholder.from.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Onclick_action(viewholder);
+                Onclick_action(viewholder,i);
             }
         });
         viewholder.to.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Onclick_action(viewholder);
+                Onclick_action(viewholder,i);
             }
         });
     }
 
-    void Onclick_action(viewholder viewholder) {
+    void Onclick_action(viewholder viewholder,int i) {
         if (viewholder.type.getVisibility() == View.GONE) {
             viewholder.type.setVisibility(View.VISIBLE);
             viewholder.note.setVisibility(View.VISIBLE);
@@ -189,6 +178,7 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
             viewholder.type.setVisibility(View.GONE);
             viewholder.note.setVisibility(View.GONE);
         }
+       // notifyItemChanged(i);
     }
 
     @Override
