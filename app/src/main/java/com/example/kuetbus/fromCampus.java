@@ -1,12 +1,9 @@
 package com.example.kuetbus;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,11 +16,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
-
+import 	java.text.DateFormat;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
@@ -35,7 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
-import java.util.Arrays;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -315,9 +311,9 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
                 return tim1.compareTo(tim2);
             }
         };
-        arrayList1.sort(E);
-        arrayList2.sort(E);
-        vector.sort(E);
+        Collections.sort(arrayList1,E);
+        Collections.sort(arrayList2,E);
+        Collections.sort(vector,E);
     }
 
     @Override
