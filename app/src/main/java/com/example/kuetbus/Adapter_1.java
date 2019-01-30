@@ -142,6 +142,7 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
             viewholder.cardView.setBackgroundColor(Color.BLACK);
             viewholder.time.setTextColor(Color.BLACK);
             viewholder.rem_time.setTextColor(Color.BLACK);
+
             viewholder.rem_time.setText(time_diff(bus.time1));
             viewholder.from.setText(bus.loc1);
             viewholder.to.setText(bus.loc2);
@@ -152,6 +153,7 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
             viewholder.cardView.setBackgroundColor(Color.rgb(13, 79, 139));
             viewholder.time.setTextColor(Color.rgb(13, 79, 139));
             viewholder.rem_time.setTextColor(Color.rgb(13, 79, 139));
+
             viewholder.rem_time.setText(time_diff(bus.time2));
             viewholder.from.setText(bus.loc2);
             viewholder.to.setText(bus.loc1);
