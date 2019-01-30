@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -24,9 +25,11 @@ import java.util.Vector;
 class viewholder extends RecyclerView.ViewHolder {
     TextInputEditText time, from, to, note, type;
     MaterialCardView cardView;
+    LinearLayout linearLayout;
 
     public viewholder(@NonNull View itemView) {
         super(itemView);
+        linearLayout=itemView.findViewById(R.id.linear_layout_expand);
         cardView = itemView.findViewById(R.id.card_view_bus_time);
         time = itemView.findViewById(R.id.text_view_start_time);
         from = itemView.findViewById(R.id.text_view_from);
@@ -130,6 +133,7 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
             viewholder.type.setText(bus.type);
             viewholder.note.setText(bus.msg);
         }
+        viewholder.linearLayout.setVisibility(View.GONE);
         viewholder.type.setVisibility(View.GONE);
         viewholder.note.setVisibility(View.GONE);
         viewholder.cardView.setOnClickListener(new View.OnClickListener() {
@@ -174,9 +178,11 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
         if (viewholder.type.getVisibility() == View.GONE) {
             viewholder.type.setVisibility(View.VISIBLE);
             viewholder.note.setVisibility(View.VISIBLE);
+            viewholder.linearLayout.setVisibility(View.VISIBLE);
         } else {
             viewholder.type.setVisibility(View.GONE);
             viewholder.note.setVisibility(View.GONE);
+            viewholder.linearLayout.setVisibility(View.GONE);
         }
        // notifyItemChanged(i);
     }

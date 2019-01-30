@@ -14,7 +14,6 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:animateLayoutChanges="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -22,7 +21,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -71,10 +69,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:animateLayoutChanges="true"
+            android:id="@+id/linear_layout_expand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
