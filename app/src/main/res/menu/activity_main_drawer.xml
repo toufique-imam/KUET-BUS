@@ -3,18 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single"
-        android:id="@+id/group_1">
+    <group
+        android:id="@+id/group_1"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/drawer_menu_upcoming"
             android:icon="@drawable/baseline_departure_board_white_36dp"
             android:title="@string/upcoming_buses" />
-        <item
-            android:enabled="false"
-            android:id="@+id/drawer_menu_for_you"
-            android:visible="false"
-            android:icon="@drawable/ic_directions_bike_white_36dp"
-            android:title="@string/for_you" />
         <item
             android:id="@+id/drawer_menu_from_KUET"
             android:icon="@drawable/ic_home_white_36dp"
@@ -33,20 +28,23 @@
             android:title="@string/tomorrow_s_full_schedule" />
         <item
             android:id="@+id/drawer_menu_update"
-            android:icon="@drawable/ic_system_update_alt_white_36dp"
+            android:icon="@drawable/ic_update_white_36dp"
             android:title="@string/update" />
     </group>
-    <group android:checkableBehavior="single"
-        android:id="@+id/group_2">
-    <item
-        android:id="@+id/drawer_menu_github"
-        android:icon="@drawable/ic_code_white_36dp"
-        android:title="@string/github" />
-    <item
-        android:id="@+id/drawer_menu_feedback"
-        android:icon="@drawable/ic_near_me_white_36dp"
-        android:title="@string/feedback" />
-
+    <group
+        android:id="@+id/group_2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/drawer_menu_github"
+            android:icon="@drawable/ic_code_white_36dp"
+            android:title="@string/github" />
+        <item
+            android:id="@+id/drawer_menu_feedback"
+            android:icon="@drawable/ic_near_me_white_36dp"
+            android:title="@string/feedback" />
+        <item
+            android:id="@+id/drawer_menu_settings"
+            android:title="Settings"
+            android:icon="@drawable/ic_settings_applications_white_36dp"/>
     </group>
-
 </menu>

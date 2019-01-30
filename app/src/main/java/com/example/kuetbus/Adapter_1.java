@@ -4,77 +4,56 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
-import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.textfield.TextInputEditText;
-
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.text.ParseException;
-import java.util.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 import java.util.Vector;
 
-class viewholder extends RecyclerView.ViewHolder {
-    TextInputEditText note, type;
-    TextView time,from,to;
-    MaterialCardView cardView;
-    LinearLayout linearLayout;
-    TextView rem_time;
-
-    public viewholder(@NonNull View itemView) {
-        super(itemView);
-        rem_time=itemView.findViewById(R.id.text_view_rem_time);
-        linearLayout=itemView.findViewById(R.id.linear_layout_expand);
-        cardView = itemView.findViewById(R.id.card_view_bus_time);
-        time = itemView.findViewById(R.id.text_view_start_time);
-        from = itemView.findViewById(R.id.text_view_from);
-        to = itemView.findViewById(R.id.text_view_to);
-        note = itemView.findViewById(R.id.text_view_start_Note);
-        type = itemView.findViewById(R.id.text_view_start_type);
-    }
-}
+import static com.example.kuetbus.fromCampus.darkOn;
 
 public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
-    String getTime() {
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm a", Locale.US);
-        return dateFormat.format(new Date());
-    }
-    Boolean comp(String bus_time, String cur_time) throws ParseException {
-        DateFormat format=new SimpleDateFormat("hh:mm a",Locale.US);
-        Date time=format.parse(bus_time);
-        Date cur=format.parse(cur_time);
-        if(time.compareTo(cur)>=0){
-            return true;
-        }
-        return false;
-    }
 
-    Context ctx;
-    boolean mark;
-    Vector<bus_data> tmp_data;
-    String time;
-
+    private Context ctx;
+    private boolean mark;
+    private Vector<bus_data> tmp_data;
+    private String time;
+    private time_class timce;
+    private int cardcolto,cardcolfrom,incardto,incardfrom;
+    private int imagefrom;
+    private int imageto;
     public Adapter_1(Context ctx, Vector<bus_data> tmp_data, boolean mark) {
         this.ctx = ctx;
+        timce=new time_class();
         this.mark = mark;
-        time = getTime();
+        if(darkOn) {
+            imagefrom=R.drawable.ic_near_me_white_24dp;
+            imageto=R.drawable.ic_gps_fixed_white_24dp;
+            this.cardcolto = fromCampus.colorblue;
+            this.cardcolfrom=fromCampus.colordark;
+            this.incardfrom=fromCampus.whitesmoke;
+            this.incardto=fromCampus.whitesmoke;
+        }
+        else{
+            imagefrom=R.drawable.ic_near_me_black_24dp;
+            imageto=R.drawable.ic_gps_fixed_black_24dp;
+            this.cardcolto = fromCampus.whitesmoke;
+            this.cardcolfrom=fromCampus.whitesmoke;
+            this.incardfrom=fromCampus.colordark;
+            this.incardto=fromCampus.colorblue;
+        }
+        this.time = timce.get_time_str();
         Log.e("TIME", time);
         if (mark) {
             this.tmp_data = new Vector<>();
             for (bus_data bus_data : tmp_data) {
                 if (bus_data.from_campus) {
                     try {
-                        if (comp(bus_data.time1, time)) {
+                        if (timce.comp(bus_data.time1, time)) {
                             this.tmp_data.add(bus_data);
                         }
                     } catch (ParseException e) {
@@ -82,7 +61,7 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
                     }
                 } else {
                     try {
-                        if (comp(bus_data.time2, time)) {
+                        if (timce.comp(bus_data.time2, time)) {
                             this.tmp_data.add(bus_data);
                         }
                     } catch (ParseException e) {
@@ -104,57 +83,47 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
             this.tmp_data = tmp_data;
         }
     }
-
     @NonNull
     @Override
     public viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View inflat = LayoutInflater.from(ctx).inflate(R.layout.adapter_layout_bus_time, viewGroup, false);
         return new viewholder(inflat);
     }
-
-    void log_bus(bus_data a) {
-        Log.e("WHATHAP", a.loc1);
-        Log.e("WHATHAP", a.loc2);
-        Log.e("WHATHAP", a.time1);
-        Log.e("WHATHAP", a.time2);
-        Log.e("WHATHAP", a.msg);
-        Log.e("WHATHAP", a.type);
-    }
-    String time_diff(String bus_time){
-        DateFormat format=new SimpleDateFormat("hh:mm a",Locale.US);
-        try {
-            Date time=format.parse(bus_time);
-            Date cur= format.parse(getTime());
-            long dif=time.getTime()-cur.getTime();
-            long diffm=dif/(60*1000)%60;
-            long diffHours = dif / (60 * 60 * 1000) % 24;
-            return  diffHours+":"+diffm+" min";
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
     @Override
     public void onBindViewHolder(@NonNull final viewholder viewholder, final int i) {
         bus_data bus = tmp_data.get(i);
         //log_bus(bus);
+        viewholder.img_from.setImageResource(imagefrom);
+        viewholder.img_to.setImageResource(imageto);
         if (bus.from_campus) {
-            viewholder.cardView.setBackgroundColor(Color.BLACK);
-            viewholder.time.setTextColor(Color.BLACK);
-            viewholder.rem_time.setTextColor(Color.BLACK);
+            viewholder.cardView.setBackgroundColor(cardcolfrom);
+            viewholder.time.setTextColor(cardcolfrom);
+            viewholder.rem_time.setTextColor(cardcolfrom);
+            viewholder.from.setTextColor(incardfrom);
+            viewholder.to.setTextColor(incardfrom);
+            viewholder.incardtim.setBackgroundColor(incardfrom);
+            viewholder.incardrem.setBackgroundColor(incardfrom);
+            viewholder.note.setTextColor(incardfrom);
+            viewholder.type.setTextColor(incardfrom);
 
-            viewholder.rem_time.setText(time_diff(bus.time1));
+            viewholder.rem_time.setText(timce.time_diff(bus.time1));
             viewholder.from.setText(bus.loc1);
             viewholder.to.setText(bus.loc2);
             viewholder.time.setText(bus.time1);
             viewholder.type.setText(bus.type);
             viewholder.note.setText(bus.msg);
         } else {
-            viewholder.cardView.setBackgroundColor(Color.rgb(13, 79, 139));
-            viewholder.time.setTextColor(Color.rgb(13, 79, 139));
-            viewholder.rem_time.setTextColor(Color.rgb(13, 79, 139));
+            viewholder.cardView.setBackgroundColor(cardcolto);
+            viewholder.time.setTextColor(cardcolto);
+            viewholder.rem_time.setTextColor(cardcolto);
+            viewholder.from.setTextColor(incardto);
+            viewholder.to.setTextColor(incardto);
+            viewholder.incardtim.setBackgroundColor(incardto);
+            viewholder.incardrem.setBackgroundColor(incardto);
+            viewholder.note.setTextColor(incardto);
+            viewholder.type.setTextColor(incardto);
 
-            viewholder.rem_time.setText(time_diff(bus.time2));
+            viewholder.rem_time.setText(timce.time_diff(bus.time2));
             viewholder.from.setText(bus.loc2);
             viewholder.to.setText(bus.loc1);
             viewholder.time.setText(bus.time2);
@@ -208,7 +177,7 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
         });
     }
 
-    void Onclick_action(viewholder viewholder,int i) {
+    private void Onclick_action(viewholder viewholder, int i) {
         if (viewholder.type.getVisibility() == View.GONE) {
             viewholder.type.setVisibility(View.VISIBLE);
             viewholder.note.setVisibility(View.VISIBLE);

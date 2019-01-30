@@ -52,6 +52,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -86,9 +87,11 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
+                        android:id="@+id/image_from"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_near_me_white_24dp" />
+                        android:src="@drawable/ic_near_me_white_24dp"
+                        android:contentDescription="@string/todo" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/text_view_from"
@@ -108,9 +111,11 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
+                        android:id="@+id/image_to"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_gps_fixed_white_24dp" />
+                        android:src="@drawable/ic_gps_fixed_white_24dp"
+                        android:contentDescription="@string/todo" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/text_view_to"
