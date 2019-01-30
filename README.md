@@ -4,8 +4,11 @@ Used New [Android Jetpack](https://developer.android.com/jetpack/)
 
 ## Features
 > Works in Offline
+
 > One Tap to Update
+
 > Sorted Bus Time for you
+
 > Friendly UI (I guess :3 )
 
 ## Install
@@ -16,4 +19,5 @@ Used New [Android Jetpack](https://developer.android.com/jetpack/)
 
 ### Possible Future Update
 > Search Bar
+
 > Fixing the Bugs
