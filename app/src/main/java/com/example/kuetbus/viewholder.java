@@ -1,5 +1,6 @@
 package com.example.kuetbus;
 
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 class viewholder extends RecyclerView.ViewHolder {
     TextInputEditText note, type;
+    CountDownTimer timer;
     TextView time,from,to;
     MaterialCardView cardView,incardtim,incardrem;
     LinearLayout linearLayout;

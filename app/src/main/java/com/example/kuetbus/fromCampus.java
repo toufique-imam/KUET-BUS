@@ -10,25 +10,13 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import com.google.android.material.navigation.NavigationView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
-
 import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +26,17 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.Vector;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 public class fromCampus extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -186,7 +185,9 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         toolbar = findViewById(R.id.toolbar);
         timce = new time_class();
         day = timce.get_day();
+        Log.e("DAYY_BUG", day);
         next_day = timce.get_next_day(day);
+        Log.e("DAYY_BUG", next_day);
         day_now = day;
         arrayList1 = new Vector<>();
         arrayList2 = new Vector<>();
@@ -430,7 +431,7 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -514,7 +515,7 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
             Intent intent = new Intent(fromCampus.this, SettingsActivity.class);
             startActivityForResult(intent, 1);
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
