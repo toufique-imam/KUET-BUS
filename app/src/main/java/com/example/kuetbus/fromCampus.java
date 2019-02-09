@@ -55,7 +55,7 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
     }
 
     final String API1 = "https://jsoneditoronline.org/?id=ae38034cad0d48fa98525f05ff04eff7";
-    final String appver = "1.2.2";
+    final String appver = "1.2.3";
     String day, next_day, day_now;
     static boolean darkOn = true;
     static final int colordark = Color.rgb(43, 43, 43), colorblue = Color.rgb(13, 79, 139), whitesmoke = Color.rgb(245, 245, 245);
