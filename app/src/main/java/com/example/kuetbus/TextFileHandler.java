@@ -24,6 +24,7 @@ public class TextFileHandler {
         try {
             File root = new File(Environment.getExternalStorageDirectory(), "Notes");
             if (!root.exists()) {
+                root.mkdirs();
                 return Pair.create(Boolean.FALSE,null);
             }
             File gpxfile = new File(root, fileName);
