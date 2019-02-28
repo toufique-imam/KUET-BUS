@@ -14,6 +14,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
@@ -57,13 +58,14 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
     final String API1 = "https://jsoneditoronline.org/?id=ae38034cad0d48fa98525f05ff04eff7";
     final String appver = "1.2.3";
     String day, next_day, day_now;
-    static boolean darkOn = true;
+    static boolean darkOn = false;
     static final int colordark = Color.rgb(43, 43, 43), colorblue = Color.rgb(13, 79, 139), whitesmoke = Color.rgb(245, 245, 245);
     final String API = "https://script.googleusercontent.com/macros/echo?user_content_key=57IfaKb-U8YMtPCyYb3KhpRBUh4wnT0IqN6AgG-TQz6G-woCggjjiRMSX8Iso9CVcnxvEwLk4OopX9Bv_-8VhNCZxplE1j5qm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnA4pYc6ryj8COOkQV7W5DxR0VUwzhItFQede_pq8mT2-DhK9GunvXrgK0fRfo0-HI_wSrHcae_pi&lib=MeRHtBj1FCHOrk7QgO_aaFlqR9hX156uw";
     Vector<bus_data> arrayList1, arrayList2, vector;
     TextFileHandler textFileHandler;
     String json_str;
     LinearLayoutManager linearLayoutManager;
+    LinearLayout linearLayoutback;
     RecyclerView recyclerView;
     time_class timce;
     Toolbar toolbar;
@@ -74,6 +76,7 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
 
     void darkon() {
         navigationView.setBackgroundColor(colordark);
+        linearLayoutback.setBackgroundColor(colordark);
         navigationView.setItemTextColor(colorStateList1);
         navigationView.setItemIconTintList(colorStateList1);
         upcoming.setIcon(R.drawable.baseline_departure_board_white_36dp);
@@ -88,6 +91,7 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
     }
 
     void darkoff() {
+        linearLayoutback.setBackgroundColor(Color.WHITE);
         navigationView.setBackgroundColor(Color.WHITE);
         navigationView.setItemIconTintList(colorStateList2);
         navigationView.setItemTextColor(colorStateList2);
@@ -172,6 +176,7 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
                         this.getResources().getColor(R.color.Black)
                 }
         );
+        linearLayoutback=findViewById(R.id.linear_layout_main);
         upcoming = findViewById(R.id.drawer_menu_upcoming);
         fromku = findViewById(R.id.drawer_menu_from_KUET);
         toku = findViewById(R.id.drawer_menu_To_KUET);

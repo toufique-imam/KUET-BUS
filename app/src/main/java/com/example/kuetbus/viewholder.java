@@ -2,6 +2,7 @@ package com.example.kuetbus;
 
 import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 class viewholder extends RecyclerView.ViewHolder {
     TextInputEditText note, type;
     CountDownTimer timer;
+    ImageButton alarm;
     TextView time,from,to;
     MaterialCardView cardView,incardtim,incardrem;
     LinearLayout linearLayout;
@@ -23,6 +25,7 @@ class viewholder extends RecyclerView.ViewHolder {
 
     public viewholder(@NonNull View itemView) {
         super(itemView);
+        alarm=itemView.findViewById(R.id.alarm_button);
         rem_time=itemView.findViewById(R.id.text_view_rem_time);
         linearLayout=itemView.findViewById(R.id.linear_layout_expand);
         cardView = itemView.findViewById(R.id.card_view_bus_time);

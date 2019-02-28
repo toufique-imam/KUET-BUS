@@ -5,6 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="1dp"
+    app:cardCornerRadius="15dp"
+    android:layout_margin="2dp"
+    android:elevation="2dp"
+    app:cardElevation="2dp"
+    app:cardMaxElevation="10dp"
     android:animateLayoutChanges="true"
     android:clipChildren="true"
     android:clipToPadding="true"
@@ -51,6 +56,21 @@
                         android:textSize="24sp" />
                 </com.google.android.material.card.MaterialCardView>
 
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/alarm_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/ic_alarm_add_white_18dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/card2"
+                    app:layout_constraintHorizontal_bias="0.466"
+                    app:layout_constraintStart_toEndOf="@+id/card1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/card2"
                     android:layout_width="wrap_content"
@@ -131,6 +151,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:orientation="vertical"
             android:id="@+id/linear_layout_expand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,7 +159,6 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/style_text_input_layout"
-                android:layout_weight="2"
                 android:hint="@string/type"
                 app:boxCornerRadiusBottomEnd="5dp"
                 app:boxCornerRadiusBottomStart="5dp"

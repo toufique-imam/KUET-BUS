@@ -1,10 +1,13 @@
 package com.example.kuetbus;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import java.text.ParseException;
 import java.util.Vector;
@@ -12,10 +15,11 @@ import java.util.Vector;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.example.kuetbus.R.drawable.ic_alarm_on_black_18dp;
+import static com.example.kuetbus.R.drawable.ic_alarm_on_white_18dp;
 import static com.example.kuetbus.fromCampus.darkOn;
 
 public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
-
     private Context ctx;
     private boolean mark;
     private Vector<bus_data> tmp_data;
@@ -94,7 +98,6 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
         viewholder.img_from.setImageResource(imagefrom);
         viewholder.img_to.setImageResource(imageto);
         if (bus.from_campus) {
-
             //------------Color---------//
             viewholder.cardView.setBackgroundColor(cardcolfrom);
             viewholder.time.setTextColor(cardcolfrom);
@@ -132,62 +135,82 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
             viewholder.type.setText(bus.type);
             viewholder.note.setText(bus.msg);
         }
-
+        viewholder.alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewholder.alarm.setBackgroundResource(ic_alarm_on_black_18dp);
+            }
+        });
         viewholder.linearLayout.setVisibility(View.GONE);
         viewholder.type.setVisibility(View.GONE);
         viewholder.note.setVisibility(View.GONE);
         viewholder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Onclick_action(viewholder,i);
+                Onclick_action(viewholder,i,v);
             }
         });
         viewholder.type.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Onclick_action(viewholder,i);
+                Onclick_action(viewholder,i,v);
             }
         });
         viewholder.note.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Onclick_action(viewholder,i);
+                Onclick_action(viewholder,i,v);
             }
         });
         viewholder.rem_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Onclick_action(viewholder,i);
+                Onclick_action(viewholder,i,v);
             }
         });
         viewholder.time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Onclick_action(viewholder,i);
+                Onclick_action(viewholder,i,v);
             }
         });
         viewholder.from.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Onclick_action(viewholder,i);
+                Onclick_action(viewholder,i,v);
             }
         });
         viewholder.to.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Onclick_action(viewholder,i);
+                Onclick_action(viewholder,i,v);
             }
         });
     }
 
-    private void Onclick_action(viewholder viewholder, int i) {
+    private void Onclick_action(viewholder viewholder, int i,View v) {
+        Animation animation1=AnimationUtils.loadAnimation(ctx, R.anim.slideup);
+        Animation animation2=AnimationUtils.loadAnimation(ctx, R.anim.slidedown);
         if (viewholder.type.getVisibility() == View.GONE) {
+            v.startAnimation(animation2);
+        //    v.animate().translationY(v.getHeight()).setDuration(300);
             viewholder.type.setVisibility(View.VISIBLE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                viewholder.cardView.setElevation(100);
+                viewholder.incardrem.setElevation(20);
+                viewholder.incardtim.setElevation(20);
+            }
             viewholder.note.setVisibility(View.VISIBLE);
             viewholder.linearLayout.setVisibility(View.VISIBLE);
         } else {
+            v.startAnimation(animation2);
             viewholder.type.setVisibility(View.GONE);
             viewholder.note.setVisibility(View.GONE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                viewholder.cardView.setElevation(0);
+                viewholder.incardrem.setElevation(0);
+                viewholder.incardtim.setElevation(0);
+            }
             viewholder.linearLayout.setVisibility(View.GONE);
         }
        // notifyItemChanged(i);
