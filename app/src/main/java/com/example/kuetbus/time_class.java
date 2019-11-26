@@ -16,7 +16,8 @@ public class time_class {
     }
 
     Date get_time(String formatx) {
-        DateFormat format = new SimpleDateFormat("hh:mm a", Locale.US);
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
+        Log.e("TIME",formatx);
         try {
             return format.parse(formatx);
         } catch (ParseException e) {
@@ -41,19 +42,19 @@ public class time_class {
     }
 
     String get_time_str() {
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm a", Locale.US);
-        return dateFormat.format(new Date());
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
+        return format.format(new Date());
     }
 
     Boolean comp(String bus_time, String cur_time) throws ParseException {
-        DateFormat format = new SimpleDateFormat("hh:mm a", Locale.US);
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
         Date time = format.parse(bus_time);
         Date cur = format.parse(cur_time);
         return time.compareTo(cur) >= 0;
     }
 
     String time_diff(String bus_time) {
-        DateFormat format = new SimpleDateFormat("hh:mm a", Locale.US);
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
         try {
             Date time = format.parse(bus_time);
             Date cur = format.parse(get_time_str());
@@ -70,7 +71,7 @@ public class time_class {
     }
 
     Long time_diff_x(String bus_time) {
-        DateFormat format = new SimpleDateFormat("hh:mm a", Locale.US);
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
         try {
             Date time = format.parse(bus_time);
             Date cur = format.parse(get_time_str());

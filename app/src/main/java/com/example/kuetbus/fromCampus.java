@@ -23,9 +23,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Vector;
 
 import androidx.annotation.NonNull;
@@ -382,7 +385,18 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         Log.e("WHAT", a.msg);
         Log.e("WHAT", a.type);
     }
-
+    boolean is_time(String time_)
+    {
+        SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
+        Log.e("TIME",time_);
+        try {
+            format.parse(time_);
+            return  true;
+        } catch (ParseException e) {
+            Log.e(getClass().getSimpleName(), e.getMessage());
+            return  false;
+        }
+    }
     void process_data(JSONArray jsonArray) throws JSONException {
         for (int i = 1; i < jsonArray.length(); i++) {
             bus_data bsd = new bus_data();
@@ -400,6 +414,8 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
             bsd1.loc2 = process_location(xd);
             bsd.time2 = process_time(xd);
             bsd1.time2 = process_time(xd);
+            if(bsd.time1.length()<5 || bsd.time2.length()<5 ||bsd1.time1.length()<5 || bsd1.time2.length()<5)continue;
+            if(!is_time(bsd.time1) || !is_time(bsd.time2) || !is_time(bsd1.time2) || !is_time(bsd.time1))continue;
             bsd.msg = tmp.getString("index3");
             bsd1.msg = tmp.getString("index3");
             if (bsd.loc2.isEmpty()) {
@@ -407,6 +423,8 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
                 bsd.loc2 = xd;
                 bsd1.loc2 = xd;
             }
+          //  Log.e("KUETBUS_TIME",bsd.time1);
+           // Log.e("KUETBUS_TIME",bsd.time2);
             bsd.from_campus = true;
             bsd1.from_campus = false;
             arrayList1.add(bsd);
@@ -414,6 +432,7 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
             vector.add(bsd);
             vector.add(bsd1);
         }
+
         Comparator<bus_data> E = new Comparator<bus_data>() {
             @Override
             public int compare(bus_data o1, bus_data o2) {
