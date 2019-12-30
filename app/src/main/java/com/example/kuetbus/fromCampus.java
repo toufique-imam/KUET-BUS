@@ -17,6 +17,17 @@ import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -31,21 +42,11 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Vector;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 
 public class fromCampus extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case 1: {
                 if (grantResults.length > 0
@@ -58,12 +59,10 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         }
     }
 
-    final String API1 = "https://jsoneditoronline.org/?id=ae38034cad0d48fa98525f05ff04eff7";
-    final String appver = "1.2.3";
     String day, next_day, day_now;
     static boolean darkOn = false;
     static final int colordark = Color.rgb(43, 43, 43), colorblue = Color.rgb(13, 79, 139), whitesmoke = Color.rgb(245, 245, 245);
-    final String API = "https://script.googleusercontent.com/macros/echo?user_content_key=57IfaKb-U8YMtPCyYb3KhpRBUh4wnT0IqN6AgG-TQz6G-woCggjjiRMSX8Iso9CVcnxvEwLk4OopX9Bv_-8VhNCZxplE1j5qm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnA4pYc6ryj8COOkQV7W5DxR0VUwzhItFQede_pq8mT2-DhK9GunvXrgK0fRfo0-HI_wSrHcae_pi&lib=MeRHtBj1FCHOrk7QgO_aaFlqR9hX156uw";
+    final String API = "https://kuet-bus.herokuapp.com/data";
     Vector<bus_data> arrayList1, arrayList2, vector;
     TextFileHandler textFileHandler;
     String json_str;
@@ -153,7 +152,31 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         recyclerView.setLayoutManager(linearLayoutManager);
     }
 
+    void readSettings() {
+        Pair<Boolean, String> json = textFileHandler.READ_TEXT("settings.txt");
+        if (json.first == Boolean.TRUE) {
+            json_str = json.second;
+            try {
+                JSONObject jsonObject = new JSONObject(json_str);
+                Integer status = jsonObject.getInt("dark");
+                darkOn = status == 1;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            updateSettings();
+        }
+    }
+
+    void updateSettings() {
+        if (darkOn)
+            json_str = "{\"dark\":1}";
+        else
+            json_str = "{\"dark\":0}";
+        textFileHandler.WRITE_TEXT("settings.txt", json_str);
+    }
     void start_json() {
+        readSettings();
         Pair<Boolean, String> json = textFileHandler.READ_TEXT("Test.txt");
         if (json.first == Boolean.TRUE) {
             json_str = json.second;
@@ -179,7 +202,7 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
                         this.getResources().getColor(R.color.Black)
                 }
         );
-        linearLayoutback=findViewById(R.id.linear_layout_main);
+        linearLayoutback = findViewById(R.id.linear_layout_main);
         upcoming = findViewById(R.id.drawer_menu_upcoming);
         fromku = findViewById(R.id.drawer_menu_from_KUET);
         toku = findViewById(R.id.drawer_menu_To_KUET);
@@ -211,36 +234,73 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
     }
 
     void update(String day) {
+        if (day.equals("FRIDAY")) return;
         try {
-            JSONObject jsonObject = new JSONObject(json_str);
-            JSONObject jsonObjectValues;
-            try {
-                jsonObjectValues = jsonObject.getJSONObject("values");
-                try {
+            JSONArray jsonArray = new JSONArray(json_str);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                bus_data bsd = new bus_data();
+                bus_data bsd1 = new bus_data();
+                JSONObject tmp = jsonArray.getJSONObject(i);
+                bsd.type = tmp.getString("TripName");
+                bsd1.type = tmp.getString("TripName");
 
-                    JSONArray morning = jsonObjectValues.getJSONArray("Morning");
-                    JSONArray noon = jsonObjectValues.getJSONArray("Noon");
-                    JSONArray afternoon = jsonObjectValues.getJSONArray("Afternoon");
-                    JSONArray night = jsonObjectValues.getJSONArray("Night");
-                    JSONArray saturday = jsonObjectValues.getJSONArray("Saturday");
-                    Log.e("DAYYY", day);
-                    if (!day.equals("FRIDAY")) {
-                        if (!day.equals("SATURDAY")) {
-                            process_data(morning);
-                            process_data(noon);
-                            process_data(afternoon);
-                            process_data(night);
-                        } else process_data(saturday);
-                    }
-                } catch (JSONException e) {
-                    Log.e("ERROR", e.getMessage());
+                bsd.loc1 = "KUET";
+                bsd.loc1 = "KUET";
+
+                bsd.time1 = tmp.getString("StartingTimefromCampus");
+                bsd1.time1 = tmp.getString("StartingTimefromCampus");
+
+                String xd = tmp.getString("StartingSpotTime");
+                bsd.loc2 = process_location(xd);
+                bsd1.loc2 = process_location(xd);
+
+                bsd.time2 = process_time(xd);
+                bsd1.time2 = process_time(xd);
+                if (bsd.time1.length() < 5 || bsd.time2.length() < 5 || bsd1.time1.length() < 5 || bsd1.time2.length() < 5)
+                    continue;
+                if (!is_time(bsd.time1) || !is_time(bsd.time2) || !is_time(bsd1.time2) || !is_time(bsd.time1))
+                    continue;
+                bsd.msg = tmp.getString("Remarks");
+                bsd1.msg = tmp.getString("Remarks");
+                if (bsd.loc2.isEmpty()) {
+                    xd = process_note_for_location(bsd.msg);
+                    bsd.loc2 = xd;
+                    bsd1.loc2 = xd;
                 }
-            } catch (JSONException e) {
-                Log.e("ERROR", e.getMessage());
+                bsd.from_campus = true;
+                bsd1.from_campus = false;
+                bsd.Section = tmp.getString("Section");
+                bsd.Section = tmp.getString("Section");
+                if ((day.equals("SATURDAY") && bsd.Section.equals("Saturday")) || (!day.equals("SATURDAY") && !bsd.Section.equals("Saturday"))) {
+                    arrayList1.add(bsd);
+                    arrayList2.add(bsd1);
+                    vector.add(bsd);
+                    vector.add(bsd1);
+                }
             }
+
+            Comparator<bus_data> E = new Comparator<bus_data>() {
+                @Override
+                public int compare(bus_data o1, bus_data o2) {
+                    Date tim1, tim2;
+                    if (o1.from_campus) {
+                        tim1 = timce.get_time(o1.time1);
+                    } else
+                        tim1 = timce.get_time(o1.time2);
+                    if (o2.from_campus) {
+                        tim2 = timce.get_time(o2.time1);
+                    } else
+                        tim2 = timce.get_time(o2.time2);
+                    return tim1.compareTo(tim2);
+                }
+            };
+            Collections.sort(arrayList1, E);
+            Collections.sort(arrayList2, E);
+            Collections.sort(vector, E);
         } catch (JSONException e) {
-            Log.e("ERROR", e.getMessage());
+            e.printStackTrace();
         }
+
     }
 
     String process_note_for_location(String s) {
@@ -298,65 +358,6 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         }
     }
 
-    private class GetAppData extends AsyncTask<Void, Void, Void> {
-        ProgressDialog progressDialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(fromCampus.this);
-            progressDialog.setMessage("Updating");
-            progressDialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            HttpHandler sh = new HttpHandler();
-            String jsnStr = sh.makeServiceCall(API1);
-            try {
-                Log.e("JSON", jsnStr);
-            } catch (Exception e) {
-                Log.e("JSONERROR", e.getMessage());
-            }
-            if (jsnStr != null) {
-                JSONObject jsonObject = null;
-                try {
-                    jsonObject = new JSONObject(jsnStr);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                String version = null;
-                try {
-                    version = jsonObject.getString("current");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if (version.compareTo(appver) == 0) {
-                    Toast.makeText(fromCampus.this, "You Already have the latest Version of this APP", Toast.LENGTH_LONG).show();
-                } else {
-                    String url = null;
-                    try {
-                        url = jsonObject.getString("update");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    Uri webpage = Uri.parse(url);
-                    Intent intn = new Intent(Intent.ACTION_VIEW, webpage);
-                    if (intn.resolveActivity(getPackageManager()) != null) {
-                        startActivity(intn);
-                    }
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            progressDialog.dismiss();
-        }
-    }
-
     String process_time(String a) {
         int i;
         for (i = 0; i < a.length(); i++) {
@@ -385,19 +386,21 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         Log.e("WHAT", a.msg);
         Log.e("WHAT", a.type);
     }
-    boolean is_time(String time_)
-    {
+
+    boolean is_time(String time_) {
         SimpleDateFormat format = new SimpleDateFormat("hh:mm aa", Locale.US);
-        Log.e("TIME",time_);
+        Log.e("TIME", time_);
         try {
             format.parse(time_);
-            return  true;
+            return true;
         } catch (ParseException e) {
             Log.e(getClass().getSimpleName(), e.getMessage());
-            return  false;
+            return false;
         }
     }
+
     void process_data(JSONArray jsonArray) throws JSONException {
+
         for (int i = 1; i < jsonArray.length(); i++) {
             bus_data bsd = new bus_data();
             bus_data bsd1 = new bus_data();
@@ -414,8 +417,10 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
             bsd1.loc2 = process_location(xd);
             bsd.time2 = process_time(xd);
             bsd1.time2 = process_time(xd);
-            if(bsd.time1.length()<5 || bsd.time2.length()<5 ||bsd1.time1.length()<5 || bsd1.time2.length()<5)continue;
-            if(!is_time(bsd.time1) || !is_time(bsd.time2) || !is_time(bsd1.time2) || !is_time(bsd.time1))continue;
+            if (bsd.time1.length() < 5 || bsd.time2.length() < 5 || bsd1.time1.length() < 5 || bsd1.time2.length() < 5)
+                continue;
+            if (!is_time(bsd.time1) || !is_time(bsd.time2) || !is_time(bsd1.time2) || !is_time(bsd.time1))
+                continue;
             bsd.msg = tmp.getString("index3");
             bsd1.msg = tmp.getString("index3");
             if (bsd.loc2.isEmpty()) {
@@ -423,10 +428,11 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
                 bsd.loc2 = xd;
                 bsd1.loc2 = xd;
             }
-          //  Log.e("KUETBUS_TIME",bsd.time1);
-           // Log.e("KUETBUS_TIME",bsd.time2);
+            //  Log.e("KUETBUS_TIME",bsd.time1);
+            // Log.e("KUETBUS_TIME",bsd.time2);
             bsd.from_campus = true;
             bsd1.from_campus = false;
+
             arrayList1.add(bsd);
             arrayList2.add(bsd1);
             vector.add(bsd);
@@ -465,23 +471,13 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-    /*    if (id == R.id.action_settings) {
-            return true;
-        }
-*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -490,26 +486,26 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.drawer_menu_upcoming) {
-            if (day_now != day) {
+            if (!day_now.equals(day)) {
                 update(day);
                 day_now = day;
             }
             set_view(2, true);
-            //Toast.makeText(fromCampus.this,"Not Yet Implemented",Toast.LENGTH_SHORT).show();
+
         } else if (id == R.id.drawer_menu_full_list) {
-            if (day_now != day) {
+            if (!day_now.equals(day)) {
                 update(day);
                 day_now = day;
             }
             set_view(2, false);
         } else if (id == R.id.drawer_menu_To_KUET) {
-            if (day_now != day) {
+            if (!day_now.equals(day)) {
                 update(day);
                 day_now = day;
             }
             set_view(1, true);
         } else if (id == R.id.drawer_menu_from_KUET) {
-            if (day_now != day) {
+            if (!day_now.equals(day)) {
                 update(day);
                 day_now = day;
             }
