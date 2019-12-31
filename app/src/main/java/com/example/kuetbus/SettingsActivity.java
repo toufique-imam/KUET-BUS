@@ -33,21 +33,21 @@ public class SettingsActivity extends AppCompatActivity {
         Intent intent=new Intent();
         intent.putExtra("OK",1);
         textFileHandler = new TextFileHandler();
-        readsettings();
+        readSettings();
         setResult(Activity.RESULT_OK,intent);
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     darkOn=true;
-                    updatesettings();
+                    updateSettings();
                     linearLayout.setBackgroundColor(colordark);
                     darkmode.setTextColor(Color.WHITE);
                     update.setTextColor(Color.WHITE);
                 }
                 else{
                     darkOn=false;
-                    updatesettings();
+                    updateSettings();
                     linearLayout.setBackgroundColor(Color.WHITE);
                     darkmode.setTextColor(colordark);
                     update.setTextColor(colordark);
@@ -56,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    void readsettings() {
+    void readSettings() {
         Pair<Boolean, String> json = textFileHandler.READ_TEXT("settings.txt");
         if (json.first == Boolean.TRUE) {
             json_str = json.second;
@@ -68,11 +68,11 @@ public class SettingsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            updatesettings();
+            updateSettings();
         }
     }
 
-    void updatesettings() {
+    void updateSettings() {
         if (darkOn)
             json_str = "{\"dark\":1}";
         else

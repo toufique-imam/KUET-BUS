@@ -91,7 +91,6 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         feed.setIcon(R.drawable.ic_near_me_white_36dp);
         stting.setIcon(R.drawable.ic_settings_applications_white_36dp);
     }
-
     void darkoff() {
         linearLayoutback.setBackgroundColor(Color.WHITE);
         navigationView.setBackgroundColor(Color.WHITE);
@@ -107,7 +106,6 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         feed.setIcon(R.drawable.ic_near_me_black_36dp);
         stting.setIcon(R.drawable.ic_settings_applications_black_36dp);
     }
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -184,7 +182,6 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
         } else {
             update_json_data();
         }
-        //log_json_arra();
         set_view(2, true);
         Toast.makeText(fromCampus.this, "Double Tap on Item to see Notes", Toast.LENGTH_LONG).show();
     }
@@ -245,7 +242,7 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
                 bsd1.type = tmp.getString("TripName");
 
                 bsd.loc1 = "KUET";
-                bsd.loc1 = "KUET";
+                bsd1.loc1 = "KUET";
 
                 bsd.time1 = tmp.getString("StartingTimefromCampus");
                 bsd1.time1 = tmp.getString("StartingTimefromCampus");
@@ -271,6 +268,7 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
                 bsd1.from_campus = false;
                 bsd.Section = tmp.getString("Section");
                 bsd.Section = tmp.getString("Section");
+
                 if ((day.equals("SATURDAY") && bsd.Section.equals("Saturday")) || (!day.equals("SATURDAY") && !bsd.Section.equals("Saturday"))) {
                     arrayList1.add(bsd);
                     arrayList2.add(bsd1);
@@ -397,66 +395,6 @@ public class fromCampus extends AppCompatActivity implements NavigationView.OnNa
             Log.e(getClass().getSimpleName(), e.getMessage());
             return false;
         }
-    }
-
-    void process_data(JSONArray jsonArray) throws JSONException {
-
-        for (int i = 1; i < jsonArray.length(); i++) {
-            bus_data bsd = new bus_data();
-            bus_data bsd1 = new bus_data();
-            JSONObject tmp = null;
-            tmp = jsonArray.getJSONObject(i);
-            bsd.type = tmp.getString("index0");
-            bsd1.type = tmp.getString("index0");
-            bsd.loc1 = "KUET";
-            bsd1.loc1 = "KUET";
-            bsd.time1 = tmp.getString("index1");
-            bsd1.time1 = tmp.getString("index1");
-            String xd = tmp.getString("index2");
-            bsd.loc2 = process_location(xd);
-            bsd1.loc2 = process_location(xd);
-            bsd.time2 = process_time(xd);
-            bsd1.time2 = process_time(xd);
-            if (bsd.time1.length() < 5 || bsd.time2.length() < 5 || bsd1.time1.length() < 5 || bsd1.time2.length() < 5)
-                continue;
-            if (!is_time(bsd.time1) || !is_time(bsd.time2) || !is_time(bsd1.time2) || !is_time(bsd.time1))
-                continue;
-            bsd.msg = tmp.getString("index3");
-            bsd1.msg = tmp.getString("index3");
-            if (bsd.loc2.isEmpty()) {
-                xd = process_note_for_location(bsd.msg);
-                bsd.loc2 = xd;
-                bsd1.loc2 = xd;
-            }
-            //  Log.e("KUETBUS_TIME",bsd.time1);
-            // Log.e("KUETBUS_TIME",bsd.time2);
-            bsd.from_campus = true;
-            bsd1.from_campus = false;
-
-            arrayList1.add(bsd);
-            arrayList2.add(bsd1);
-            vector.add(bsd);
-            vector.add(bsd1);
-        }
-
-        Comparator<bus_data> E = new Comparator<bus_data>() {
-            @Override
-            public int compare(bus_data o1, bus_data o2) {
-                Date tim1, tim2;
-                if (o1.from_campus) {
-                    tim1 = timce.get_time(o1.time1);
-                } else
-                    tim1 = timce.get_time(o1.time2);
-                if (o2.from_campus) {
-                    tim2 = timce.get_time(o2.time1);
-                } else
-                    tim2 = timce.get_time(o2.time2);
-                return tim1.compareTo(tim2);
-            }
-        };
-        Collections.sort(arrayList1, E);
-        Collections.sort(arrayList2, E);
-        Collections.sort(vector, E);
     }
 
     @Override

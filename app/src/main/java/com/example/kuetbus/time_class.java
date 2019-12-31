@@ -2,7 +2,6 @@ package com.example.kuetbus;
 
 import android.util.Log;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,6 +25,11 @@ public class time_class {
         return null;
     }
 
+    Date forward_time(String formatx, Long x) {
+        Date temp = get_time(formatx);
+        Date ans = new Date(temp.getTime() + (x * 60000L));
+        return ans;
+    }
     String get_day() {
         Calendar calendar = Calendar.getInstance();
         Date date = calendar.getTime();
@@ -63,7 +67,7 @@ public class time_class {
             long diffHours = dif / (60 * 60 * 1000) % 24;
             diffm = max(diffm, 0);
             diffHours = max(diffHours, 0);
-            return diffHours + "h:" + diffm + " min";
+            return diffHours + "h:" + diffm + "min";
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -75,11 +79,12 @@ public class time_class {
         try {
             Date time = format.parse(bus_time);
             Date cur = format.parse(get_time_str());
-            return time.getTime() - cur.getTime();
+            long dif = time.getTime() - cur.getTime();
+            return dif;
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return null;
+        return 0L;
     }
 
 }

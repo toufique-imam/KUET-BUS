@@ -7,11 +7,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.textfield.TextInputEditText;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textfield.TextInputEditText;
 
 class viewholder extends RecyclerView.ViewHolder {
     TextInputEditText note, type;
@@ -22,7 +22,7 @@ class viewholder extends RecyclerView.ViewHolder {
     LinearLayout linearLayout;
     TextView rem_time;
     ImageView img_from,img_to;
-
+    CountDownTimer countDownTimer;
     public viewholder(@NonNull View itemView) {
         super(itemView);
         alarm=itemView.findViewById(R.id.alarm_button);
@@ -38,5 +38,6 @@ class viewholder extends RecyclerView.ViewHolder {
         img_to=itemView.findViewById(R.id.image_to);
         incardtim=itemView.findViewById(R.id.card1);
         incardrem=itemView.findViewById(R.id.card2);
+
     }
 }

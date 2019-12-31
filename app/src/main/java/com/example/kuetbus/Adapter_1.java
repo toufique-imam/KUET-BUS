@@ -1,7 +1,9 @@
 package com.example.kuetbus;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +11,11 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-import java.text.ParseException;
-import java.util.Vector;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.text.ParseException;
+import java.util.Vector;
 
 import static com.example.kuetbus.R.drawable.ic_alarm_on_black_18dp;
 import static com.example.kuetbus.R.drawable.ic_alarm_on_white_18dp;
@@ -28,6 +30,8 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
     private int cardcolto,cardcolfrom,incardto,incardfrom;
     private int imagefrom;
     private int imageto;
+    private NotificationManager notifManager;
+
     public Adapter_1(Context ctx, Vector<bus_data> tmp_data, boolean mark) {
         this.ctx = ctx;
         timce=new time_class();
@@ -85,6 +89,7 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
             this.tmp_data = tmp_data;
         }
     }
+
     @NonNull
     @Override
     public viewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -94,9 +99,14 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
     @Override
     public void onBindViewHolder(@NonNull final viewholder viewholder, final int i) {
         final bus_data bus = tmp_data.get(i);
+        if (viewholder.countDownTimer != null) {
+            viewholder.countDownTimer.cancel();
+        }
+        //viewholder.alarm.setVisibility(View.INVISIBLE);
         //log_bus(bus);
         viewholder.img_from.setImageResource(imagefrom);
         viewholder.img_to.setImageResource(imageto);
+        Long count = 0L;
         if (bus.from_campus) {
             //------------Color---------//
             viewholder.cardView.setBackgroundColor(cardcolfrom);
@@ -108,6 +118,9 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
             viewholder.incardrem.setBackgroundColor(incardfrom);
             viewholder.note.setTextColor(incardfrom);
             viewholder.type.setTextColor(incardfrom);
+            //---------TEXT---------//
+            String xx = timce.time_diff(bus.time1);
+            if (xx != null && !xx.equals("0h:0min")) count = timce.time_diff_x(bus.time1);
             viewholder.rem_time.setText(timce.time_diff(bus.time1));
             viewholder.from.setText(bus.loc1);
             viewholder.to.setText(bus.loc2);
@@ -115,7 +128,6 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
             viewholder.type.setText(bus.type);
             viewholder.note.setText(bus.msg);
         } else {
-
             //------------Color---------//
             viewholder.cardView.setBackgroundColor(cardcolto);
             viewholder.time.setTextColor(cardcolto);
@@ -127,6 +139,9 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
             viewholder.note.setTextColor(incardto);
             viewholder.type.setTextColor(incardto);
 
+            String xx = timce.time_diff(bus.time2);
+            if (xx != null && !xx.equals("0h:0min"))
+                count = timce.time_diff_x(bus.time2);
             //-----------Text----------//
             viewholder.rem_time.setText(timce.time_diff(bus.time2));
             viewholder.from.setText(bus.loc2);
@@ -138,9 +153,31 @@ public class Adapter_1 extends RecyclerView.Adapter<viewholder> {
         viewholder.alarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewholder.alarm.setBackgroundResource(ic_alarm_on_black_18dp);
+                if (bus.alarm) {
+                    viewholder.alarm.setBackgroundResource(ic_alarm_on_white_18dp);
+                    bus.alarm = false;
+                } else {
+                    bus.alarm = true;
+                    viewholder.alarm.setBackgroundResource(ic_alarm_on_black_18dp);
+                }
             }
         });
+        Log.e("error", String.valueOf(count));
+        viewholder.countDownTimer = new CountDownTimer(count, 10) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long seconds = millisUntilFinished / 1000;
+                long minutes = seconds / 60;
+                long hours = minutes / 60;
+                String time = hours % 24 + "h:" + minutes % 60 + "min";
+                viewholder.rem_time.setText(time);
+            }
+
+            @Override
+            public void onFinish() {
+                viewholder.rem_time.setText("0h:0min");
+            }
+        }.start();
         viewholder.linearLayout.setVisibility(View.GONE);
         viewholder.type.setVisibility(View.GONE);
         viewholder.note.setVisibility(View.GONE);
