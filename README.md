@@ -24,4 +24,4 @@ Used New [Android Jetpack](https://developer.android.com/jetpack/)
 ### Possible Future Update
 - Search Bar
 
-- Setting Remainder/Alarm something like this 
+- Remainder/Alarm something like this 
