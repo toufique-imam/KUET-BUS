@@ -7,13 +7,11 @@ Used New [Android Jetpack](https://developer.android.com/jetpack/)
 
 - One Tap to Update
 
-- Sorted Bus Time for you
-
 - Friendly UI (I guess :3 )
 
 ## Install
 
-> [Version 1.2.4](https://github.com/sabertooth9/KUET-BUS/releases/download/1.2.4/kuet_bus.apk)
+> [Latest Release](https://github.com/sabertooth9/KUET-BUS/releases/latest)
 
 > [History](https://github.com/sabertooth9/KUET-BUS/releases)
 
