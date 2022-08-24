@@ -1,6 +1,15 @@
 # KUET-BUS
 Bus Schedule App For KUET Bus 
-Used New [Android Jetpack](https://developer.android.com/jetpack/)
+
+[Iftekher Toufique Imam](https://github.com/toufique-imam)
+
+---
+
+[![GitHub Stars](https://img.shields.io/github/stars/toufique-imam/KUET-BUS?style=social)](https://github.com/toufique-imam/KUET-BUS)
+[![download](https://img.shields.io/github/downloads/toufique-imam/KUET-BUS/total.svg)](https://github.com/toufique-imam/KUET-BUS)
+![visitors](https://visitor-badge.glitch.me/badge?page_id=toufique-imam/KUET-BUS)
+
+---
 
 ## Features
 - Works in Offline
